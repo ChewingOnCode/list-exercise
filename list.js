@@ -2,17 +2,30 @@
 var button = document.getElementById("enter");
 var input = document.getElementById("userInput");
 var ul = document.querySelector("ul");
-
 function inputLength() {
   return input.value.length;
 }
 
 function createListElement() {
   var li = document.createElement("li");
-  // Attached testing to the <li></li> that was created.
   li.appendChild(document.createTextNode(input.value));
   // Append a child to the <ul></ul>
   ul.appendChild(li);
+  // Creates a boolean that toggles done class on li
+  li.addEventListener("click", function () {
+    var complete = this.classList.toggle("done");
+    var delButton = document.createElement("button");
+    delButton.classList.add("delete");
+    if (complete) {
+      // Add a textnode to the delete button
+      delButton.appendChild(document.createTextNode("remove"));
+      delButton.classList = "delete";
+      li.appendChild(delButton);
+      delButton.addEventListener("click", function () {
+        this.parentElement.remove();
+      });
+    }
+  });
   input.value = "";
 }
 
